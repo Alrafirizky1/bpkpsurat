@@ -5,7 +5,7 @@
 
 <nav class="blue-grey darken-1">
     <div class="nav-wrapper">
-        <a href="./" class="brand-logo center hide-on-large-only"><i class="material-icons md-36">school</i> AMS</a>
+        <a href="./" class="brand-logo center hide-on-large-only"><i class="material-icons md-36">business</i> BPKP Jawa Barat</a>
         <ul id="slide-out" class="side-nav" data-simplebar-direction="vertical">
             <li class="no-padding">
                 <div class="logo-side center blue-grey darken-3">
@@ -132,7 +132,7 @@
 
         <!-- Menu on large screen START -->
         <ul class="center hide-on-med-and-down" id="nv">
-            <li><a href="./" class="ams hide-on-med-and-down"><i class="material-icons md-36">school</i> AMS</a></li>
+            <li><a href="./" class="ams hide-on-med-and-down"><i class="material-icons md-36">business</i> BPKP Jawa Barat</a></li>
             <li><div class="grs"></></li>
             <li><a href="./"><i class="material-icons"></i>&nbsp; Beranda</a></li>
             <?php
@@ -145,16 +145,6 @@
             <?php
                 }
             ?>
-            <li><a class="dropdown-button" href="#!" data-activates="agenda">Buku Agenda <i class="material-icons md-18">arrow_drop_down</i></a></li>
-                <ul id='agenda' class='dropdown-content'>
-                    <li><a href="?page=asm">Surat Masuk</a></li>
-                    <li><a href="?page=ask">Surat Keluar</a></li>
-                </ul>
-            <li><a class="dropdown-button" href="#!" data-activates="agenda">Galeri File <i class="material-icons md-18">arrow_drop_down</i></a></li>
-                <ul id='agenda' class='dropdown-content'>
-                    <li><a href="?page=gsm">Surat Masuk</a></li>
-                    <li><a href="?page=gsk">Surat Keluar</a></li>
-                </ul>
             <li><a href="?page=ref">Referensi</a></li>
             <?php
                 if($_SESSION['admin'] == 1){ ?>

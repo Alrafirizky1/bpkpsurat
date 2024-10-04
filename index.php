@@ -12,18 +12,7 @@
     require_once 'include/functions.php';
     $config = conn($host, $username, $password, $database);
 ?>
-<!--
 
-Name        : Aplikasi Sederhana Manajemen Surat Menyurat
-Version     : v1.0.0
-Description : Aplikasi untuk mencatat data surat masuk dan keluar secara digital.
-Date        : 2016
-Developer   : M. Rudianto
-Phone/WA    : 0852-3290-4156
-Email       : rudi@masrud.com
-Website     : https://masrud.com
-
--->
 <!doctype html>
 <html lang="en">
 
@@ -55,7 +44,7 @@ Website     : https://masrud.com
         }
         .bg::before {
             content: '';
-            background-image: url('./asset/img/background.jpg');
+            background-image: url('./asset/img/bgjabar.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed;
@@ -194,7 +183,7 @@ Website     : https://masrud.com
                     <!-- Logo and title START -->
                     <div class="col s12">
                         <div class="card-content">
-                            <h5 class="center" id="title">Aplikasi Manajemen Surat</h5>
+                            <h5 class="center" id="title">BPKP Persuratan</h5>
                             <?php echo '<img id="logo" src="upload/'.$data['logo'].'">';?>
                             <h4 class="center" id="smk">
                             <?php echo ''.$data['nama'].'';?>

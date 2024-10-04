@@ -28,7 +28,7 @@
             }
         } else {
 
-            $query = mysqli_query($config, "SELECT surat_keluar FROM tbl_sett");
+            $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk");
             list($surat_keluar) = mysqli_fetch_array($query);
 
             //pagging

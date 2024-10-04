@@ -9,18 +9,7 @@
         die();
     } else {
 ?>
-<!--
 
-Name        : Aplikasi Sederhana Manajemen Surat Menyurat
-Version     : v1.0.0
-Description : Aplikasi untuk mencatat data surat masuk dan keluar secara digital.
-Date        : 2016
-Developer   : M. Rudianto
-Phone/WA    : 0852-3290-4156
-Email       : rudi@masrud.com
-Website     : https://masrud.com
-
--->
 <!doctype html>
 <html lang="en">
 
@@ -59,12 +48,6 @@ Website     : https://masrud.com
                     break;
                 case 'tsk':
                     include "transaksi_surat_keluar.php";
-                    break;
-                case 'asm':
-                    include "agenda_surat_masuk.php";
-                    break;
-                case 'ask':
-                    include "agenda_surat_keluar.php";
                     break;
                 case 'ref':
                     include "referensi.php";
@@ -117,21 +100,14 @@ Website     : https://masrud.com
                 //menghitung jumlah surat masuk
                 $count2 = mysqli_num_rows(mysqli_query($config, "SELECT * FROM tbl_surat_keluar"));
 
-                //menghitung jumlah surat masuk
-                $count3 = mysqli_num_rows(mysqli_query($config, "SELECT * FROM tbl_disposisi"));
-
-                //menghitung jumlah klasifikasi
-                $count4 = mysqli_num_rows(mysqli_query($config, "SELECT * FROM tbl_klasifikasi"));
-
-                //menghitung jumlah pengguna
-                $count5 = mysqli_num_rows(mysqli_query($config, "SELECT * FROM tbl_user"));
             ?>
 
             <!-- Info Statistic START -->
             <div class="col s12 m4">
                 <div class="card cyan">
                     <div class="card-content">
-                        <span class="card-title white-text"><i class="material-icons md-36">mail</i> Jumlah Surat Masuk</span>
+                        <a href="?page=tsm" class="">
+                        <span class="card-title white-text"><i class="material-icons md-36">mail</i> Jumlah Surat Masuk</span></a>
                         <?php echo '<h5 class="white-text link">'.$count1.' Surat Masuk</h5>'; ?>
                     </div>
                 </div>
@@ -140,29 +116,13 @@ Website     : https://masrud.com
             <div class="col s12 m4">
                 <div class="card lime darken-1">
                     <div class="card-content">
-                        <span class="card-title white-text"><i class="material-icons md-36">drafts</i> Jumlah Surat Keluar</span>
+                        <a href="?page=tsk" class="">
+                        <span class="card-title white-text"><i class="material-icons md-36">drafts</i> Jumlah Surat Keluar</span></a>
                         <?php echo '<h5 class="white-text link">'.$count2.' Surat Keluar</h5>'; ?>
                     </div>
                 </div>
             </div>
 
-            <div class="col s12 m4">
-                <div class="card yellow darken-3">
-                    <div class="card-content">
-                        <span class="card-title white-text"><i class="material-icons md-36">description</i> Jumlah Disposisi</span>
-                        <?php echo '<h5 class="white-text link">'.$count3.' Disposisi</h5>'; ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col s12 m4">
-                <div class="card deep-orange">
-                    <div class="card-content">
-                        <span class="card-title white-text"><i class="material-icons md-36">class</i> Jumlah Klasifikasi Surat</span>
-                        <?php echo '<h5 class="white-text link">'.$count4.' Klasifikasi Surat</h5>'; ?>
-                    </div>
-                </div>
-            </div>
 
         <?php
             if($_SESSION['id_user'] == 1 || $_SESSION['admin'] == 2){?>

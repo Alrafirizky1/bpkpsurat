@@ -6,7 +6,7 @@
         die();
     } else {
 
-        if($_SESSION['admin'] != 1 AND $_SESSION['admin'] != 3){
+        if($_SESSION['admin'] != 1 AND $_SESSION['admin'] != 3 AND $_SESSION['admin'] != 2){
             echo '<script language="javascript">
                     window.alert("ERROR! Anda tidak memiliki hak akses untuk membuka halaman ini");
                     window.location.href="./logout.php";
@@ -34,11 +34,7 @@
                 }
             } else {
 
-                $query = mysqli_query($config, "SELECT surat_masuk FROM tbl_sett");
-                list($surat_masuk) = mysqli_fetch_array($query);
-
-                //pagging
-                $limit = $surat_masuk;
+                $limit = 5; // Set limit to 10 data per page
                 $pg = @$_GET['pg'];
                 if(empty($pg)){
                     $curr = 0;
@@ -140,47 +136,42 @@
                         <table class="bordered" id="tbl">
                             <thead class="blue lighten-4" id="head">
                                 <tr>
-                                    <th width="10%">No. Agenda<br/>Kode</th>
-                                    <th width="30%">Isi Ringkas<br/> File</th>
+                                    <th width="10%">No. Surat<br/></th>
+                                    <th width="30%">Tanggal Masuk<br/></th>
                                     <th width="24%">Asal Surat</th>
-                                    <th width="18%">No. Surat<br/>Tgl Surat</th>
+                                    <th width="18%">Tujuan Surat<br/></th>
                                     <th width="18%">Tindakan <span class="right"><i class="material-icons" style="color: #333;">settings</i></span></th>
                                 </tr>
                             </thead>
                             <tbody>';
 
                             //script untuk mencari data
-                            $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk WHERE isi LIKE '%$cari%' ORDER by id_surat DESC LIMIT 15");
+                            $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk WHERE no_surat LIKE '%$cari%' ORDER by pengirim DESC LIMIT 10"); // Limit 10 data
                             if(mysqli_num_rows($query) > 0){
                                 $no = 1;
                                 while($row = mysqli_fetch_array($query)){
                                   echo '
                                   <tr>
-                                    <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
-                                    <td>'.substr($row['isi'],0,200).'<br/><br/><strong>File :</strong>';
-
-                                    if(!empty($row['file'])){
-                                        echo ' <strong><a href="?page=gsm&act=fsm&id_surat='.$row['id_surat'].'">'.$row['file'].'</a></strong>';
-                                    } else {
-                                        echo '<em>Tidak ada file yang di upload</em>';
-                                    } echo '</td>
-                                    <td>'.$row['asal_surat'].'</td>
-                                    <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
+                                    <td>'.substr($row['no_surat'],0,200).'<br/><br/>';
+                                        echo ' <strong><a href="?page=gsm&act=fsm&id_surat='.$row['id_surat_masuk'].'"></a></strong>';
+                                     echo '</td>
+                                     <td>'.$row['tanggal_surat'].'<br/><hr/>'.indoDate($row['tanggal_surat']).'</td>
+                                     <td>'.$row['pengirim'].'</td>
+                                     <td>'.$row['tujuan'].'</td>
                                     <td>';
 
-                                    if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                        echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
-                                            <i class="material-icons">print</i> PRINT</a>';
-                                    } else {
-                                      echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
+                                    
+                                
+                                     
+                                      echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat_masuk'].'">
                                                 <i class="material-icons">edit</i> EDIT</a>
-                                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
+                                            <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat_masuk'].'">
                                                 <i class="material-icons">description</i> DISP</a>
-                                            <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
+                                            <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat_masuk'].'" target="_blank">
                                                 <i class="material-icons">print</i> PRINT</a>
-                                            <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
+                                            <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat_masuk'].'">
                                                 <i class="material-icons">delete</i> DEL</a>';
-                                    } echo '
+                                     echo '
                                         </td>
                                     </tr>';
                                 }
@@ -199,103 +190,53 @@
                             <table class="bordered" id="tbl">
                                 <thead class="blue lighten-4" id="head">
                                     <tr>
-                                        <th width="10%">No. Agenda<br/>Kode</th>
-                                        <th width="30%">Isi Ringkas<br/> File</th>
+                                        <th width="10%">No. Surat<br/></th>
+                                        <th width="30%">Tanggal Masuk<br/></th>
                                         <th width="24%">Asal Surat</th>
-                                        <th width="18%">No. Surat<br/>Tgl Surat</th>
-                                        <th width="18%">Tindakan <span class="right tooltipped" data-position="left" data-tooltip="Atur jumlah data yang ditampilkan"><a class="modal-trigger" href="#modal"><i class="material-icons" style="color: #333;">settings</i></a></span></th>
-
-                                            <div id="modal" class="modal">
-                                                <div class="modal-content white">
-                                                    <h5>Jumlah data yang ditampilkan per halaman</h5>';
-                                                    $query = mysqli_query($config, "SELECT id_sett,surat_masuk FROM tbl_sett");
-                                                    list($id_sett,$surat_masuk) = mysqli_fetch_array($query);
-                                                    echo '
-                                                    <div class="row">
-                                                        <form method="post" action="">
-                                                            <div class="input-field col s12">
-                                                                <input type="hidden" value="'.$id_sett.'" name="id_sett">
-                                                                <div class="input-field col s1" style="float: left;">
-                                                                    <i class="material-icons prefix md-prefix">looks_one</i>
-                                                                </div>
-                                                                <div class="input-field col s11 right" style="margin: -5px 0 20px;">
-                                                                    <select class="browser-default validate" name="surat_masuk" required>
-                                                                        <option value="'.$surat_masuk.'">'.$surat_masuk.'</option>
-                                                                        <option value="5">5</option>
-                                                                        <option value="10">10</option>
-                                                                        <option value="20">20</option>
-                                                                        <option value="50">50</option>
-                                                                        <option value="100">100</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="modal-footer white">
-                                                                    <button type="submit" class="modal-action waves-effect waves-green btn-flat" name="simpan">Simpan</button>';
-                                                                    if(isset($_REQUEST['simpan'])){
-                                                                        $id_sett = "1";
-                                                                        $surat_masuk = $_REQUEST['surat_masuk'];
-                                                                        $id_user = $_SESSION['id_user'];
-
-                                                                        $query = mysqli_query($config, "UPDATE tbl_sett SET surat_masuk='$surat_masuk',id_user='$id_user' WHERE id_sett='$id_sett'");
-                                                                        if($query == true){
-                                                                            header("Location: ./admin.php?page=tsm");
-                                                                            die();
-                                                                        }
-                                                                    } echo '
-                                                                    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Batal</a>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                        <th width="18%">Tujuan Surat<br/></th>
+                                        <th width="18%">Tindakan <span class="right"><i class="material-icons" style="color: #333;">settings</i></span></th>
                                     </tr>
                                 </thead>
                                 <tbody>';
 
                                 //script untuk menampilkan data
-                                $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk ORDER by id_surat DESC LIMIT $curr, $limit");
+                                $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk ORDER by pengirim DESC LIMIT $curr, $limit"); // Paginated query
                                 if(mysqli_num_rows($query) > 0){
                                     $no = 1;
                                     while($row = mysqli_fetch_array($query)){
-                                      echo '
-                                      <tr>
-                                        <td>'.$row['no_agenda'].'<br/><hr/>'.$row['kode'].'</td>
-                                        <td>'.substr($row['isi'],0,200).'<br/><br/><strong>File :</strong>';
+                                        echo '
+                                        <tr>
+                                          <td>'.substr($row['no_surat'],0,200).'<br/><br/>';
+                                          echo ' <strong><a href="?page=gsm&act=fsm&id_surat='.$row['id_surat_masuk'].'"></a></strong>';
+                                          echo '</td>
+                                          <td>'.$row['tanggal_surat'].'<br/><hr/>'.indoDate($row['tanggal_surat']).'</td>
+                                          <td>'.$row['pengirim'].'</td>
+                                           <td>'.$row['tujuan'].'</td>
+                                          <td>';
 
-                                        if(!empty($row['file'])){
-                                            echo ' <strong><a href="?page=gsm&act=fsm&id_surat='.$row['id_surat'].'">'.$row['file'].'</a></strong>';
-                                        } else {
-                                            echo '<em>Tidak ada file yang di upload</em>';
-                                        } echo '</td>
-                                        <td>'.$row['asal_surat'].'</td>
-                                        <td>'.$row['no_surat'].'<br/><hr/>'.indoDate($row['tgl_surat']).'</td>
-                                        <td>';
-
-                                        if($_SESSION['id_user'] != $row['id_user'] AND $_SESSION['id_user'] != 1){
-                                            echo '<a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
-                                                <i class="material-icons">print</i> PRINT</a>';
-                                        } else {
-                                          echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">edit</i> EDIT</a>
-                                                <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">description</i> DISP</a>
-                                                <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat'].'" target="_blank">
-                                                    <i class="material-icons">print</i> PRINT</a>
-                                                <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat'].'">
-                                                    <i class="material-icons">delete</i> DEL</a>';
-                                        } echo '
-                                        </td>
-                                    </tr>';
+                                    
+                                            echo '<a class="btn small blue waves-effect waves-light" href="?page=tsm&act=edit&id_surat='.$row['id_surat_masuk'].'">
+                                                      <i class="material-icons">edit</i> EDIT</a>
+                                                  <a class="btn small light-green waves-effect waves-light tooltipped" data-position="left" data-tooltip="Pilih Disp untuk menambahkan Disposisi Surat" href="?page=tsm&act=disp&id_surat='.$row['id_surat_masuk'].'">
+                                                      <i class="material-icons">description</i> DISP</a>
+                                                  <a class="btn small yellow darken-3 waves-effect waves-light" href="?page=ctk&id_surat='.$row['id_surat_masuk'].'" target="_blank">
+                                                      <i class="material-icons">print</i> PRINT</a>
+                                                  <a class="btn small deep-orange waves-effect waves-light" href="?page=tsm&act=del&id_surat='.$row['id_surat_masuk'].'">
+                                                      <i class="material-icons">delete</i> DEL</a>';
+                                           echo '
+                                              </td>
+                                          </tr>';
+                                    }
+                                } else {
+                                    echo '<tr><td colspan="5"><center><p class="add">Tidak ada data yang ditemukan</p></center></td></tr>';
                                 }
-                            } else {
-                                echo '<tr><td colspan="5"><center><p class="add">Tidak ada data untuk ditampilkan. <u><a href="?page=tsm&act=add">Tambah data baru</a></u></p></center></td></tr>';
-                            }
-                          echo '</tbody></table>
+                                echo '</tbody></table><br/><br/>
                         </div>
-                    </div>
-                    <!-- Row form END -->';
-
+                        <!-- Row form END -->';
+                    }
+                    ?>
+                <?php
+                    // Count total data for pagination
                     $query = mysqli_query($config, "SELECT * FROM tbl_surat_masuk");
                     $cdata = mysqli_num_rows($query);
                     $cpg = ceil($cdata/$limit);
@@ -303,42 +244,38 @@
                     echo '<br/><!-- Pagination START -->
                           <ul class="pagination">';
 
-                    if($cdata > $limit ){
-
-                        //first and previous pagging
-                        if($pg > 1){
-                            $prev = $pg - 1;
-                            echo '<li><a href="?page=tsm&pg=1"><i class="material-icons md-48">first_page</i></a></li>
-                                  <li><a href="?page=tsm&pg='.$prev.'"><i class="material-icons md-48">chevron_left</i></a></li>';
-                        } else {
-                            echo '<li class="disabled"><a href="#"><i class="material-icons md-48">first_page</i></a></li>
-                                  <li class="disabled"><a href="#"><i class="material-icons md-48">chevron_left</i></a></li>';
-                        }
-
-                        //perulangan pagging
-                        for ($i = 1; $i <= $cpg; $i++) {
-                            if ((($i >= $pg - 3) && ($i <= $pg + 3)) || ($i == 1) || ($i == $cpg)) {
-                                if ($i == $pg) echo '<li class="active waves-effect waves-dark"><a href="?page=tsm&pg='.$i.'"> '.$i.' </a></li>';
-                                else echo '<li class="waves-effect waves-dark"><a href="?page=tsm&pg='.$i.'"> '.$i.' </a></li>';
-                            }
-                        }
-
-                        //last and next pagging
-                        if($pg < $cpg){
-                            $next = $pg + 1;
-                            echo '<li><a href="?page=tsm&pg='.$next.'"><i class="material-icons md-48">chevron_right</i></a></li>
-                                  <li><a href="?page=tsm&pg='.$cpg.'"><i class="material-icons md-48">last_page</i></a></li>';
-                        } else {
-                            echo '<li class="disabled"><a href="#"><i class="material-icons md-48">chevron_right</i></a></li>
-                                  <li class="disabled"><a href="#"><i class="material-icons md-48">last_page</i></a></li>';
-                        }
-                        echo '
-                        </ul>';
+                    // Display link to previous page
+                    if($pg > 1){
+                        $prev = $pg - 1;
+                        echo '<li><a href="?page=tsm&pg=1"><i class="material-icons md-48">first_page</i></a></li>
+                              <li><a href="?page=tsm&pg='.$prev.'"><i class="material-icons md-48">chevron_left</i></a></li>';
                     } else {
-                        echo '';
+                        echo '<li class="disabled"><a href="#"><i class="material-icons md-48">first_page</i></a></li>
+                              <li class="disabled"><a href="#"><i class="material-icons md-48">chevron_left</i></a></li>';
                     }
+
+                    // Display page numbers
+                    for($i = 1; $i <= $cpg; $i++){
+                        if($i != $pg){
+                            echo '<li class="waves-effect waves-dark"><a href="?page=tsm&pg='.$i.'"> '.$i.' </a></li>';
+                        } else {
+                            echo '<li class="active"><a href="?page=tsm&pg='.$i.'"> '.$i.' </a></li>';
+                        }
+                    }
+
+                    // Display link to next page
+                    if($pg < $cpg){
+                        $next = $pg + 1;
+                        echo '<li><a href="?page=tsm&pg='.$next.'"><i class="material-icons md-48">chevron_right</i></a></li>
+                              <li><a href="?page=tsm&pg='.$cpg.'"><i class="material-icons md-48">last_page</i></a></li>';
+                    } else {
+                        echo '<li class="disabled"><a href="#"><i class="material-icons md-48">chevron_right</i></a></li>
+                              <li class="disabled"><a href="#"><i class="material-icons md-48">last_page</i></a></li>';
+                    }
+                    echo '</ul>
+                          <!-- Pagination END -->';
                 }
             }
         }
-    }
+    
 ?>
