@@ -22,10 +22,6 @@
     ?>
     <!-- Meta END -->
 
-    <!--[if lt IE 9]>
-    <script src="../asset/js/html5shiv.min.js"></script>
-    <![endif]-->
-
     <!-- Global style START -->
     <link type="text/css" rel="stylesheet" href="asset/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="asset/css/jquery-ui.css">

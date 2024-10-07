@@ -78,7 +78,7 @@ $(document).ready(function(){
  });
 
 </script>
-<!-- Javascript END -->
+
 
 <?php
     } else {

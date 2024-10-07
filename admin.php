@@ -99,6 +99,8 @@
 
                 //menghitung jumlah surat masuk
                 $count2 = mysqli_num_rows(mysqli_query($config, "SELECT * FROM tbl_surat_keluar"));
+                //menghitung jumlah pengguna
+                $count5 = mysqli_num_rows(mysqli_query($config, "SELECT * FROM tbl_user"));
 
             ?>
 
@@ -125,7 +127,7 @@
 
 
         <?php
-            if($_SESSION['id_user'] == 1 || $_SESSION['admin'] == 2){?>
+            if($_SESSION['id_user'] == 1 || $_SESSION['admin'] == 1 || $_SESSION['admin'] == 2){?>
             <div class="col s12 m4">
                 <div class="card blue accent-2">
                     <div class="card-content">
