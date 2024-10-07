@@ -6191,26 +6191,18 @@ ul.side-nav.fixed .collapsible-body li.active a {
 
 }
 
+$iefactor: 0;
+
 .spinner-layer {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-
-	-ms-filter:"progid:DXImageTransform@mixin Microsoft@mixin Alpha(Opacity=$ {
-		iefactor
-	}
-
-	)";
-
-	filter:alpha(opacity=($ {
-		iefactor
-	}
-
-	));
-	-moz-opacity: 0;
-	-khtml-opacity: 0;
-	opacity: 0
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$iefactor})";
+  filter: alpha(opacity=#{$iefactor});
+  opacity: $iefactor;
 }
+
 
 .spinner-blue,
 .spinner-blue-only {
@@ -6256,23 +6248,12 @@ ul.side-nav.fixed .collapsible-body li.active a {
 .active .spinner-layer.spinner-red-only,
 .active .spinner-layer.spinner-yellow-only,
 .active .spinner-layer.spinner-green-only {
-	-ms-filter:"progid:DXImageTransform@mixin Microsoft@mixin Alpha(Opacity=$ {
-		iefactor
-	}
-
-	)";
-
-	filter:alpha(opacity=($ {
-		iefactor
-	}
-
-	));
-	-moz-opacity: 1;
-	-khtml-opacity: 1;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
 	opacity: 1;
 	-webkit-animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
-	animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both
-}
+	animation: fill-unfill-rotate 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both;
+	
 
 @-webkit-keyframes fill-unfill-rotate {
 	12.5% {
@@ -6721,19 +6702,8 @@ ul.side-nav.fixed .collapsible-body li.active a {
 }
 
 .slider ul.slides li {
-	-ms-filter:"progid:DXImageTransform@mixin Microsoft@mixin Alpha(Opacity=$ {
-		iefactor
-	}
-
-	)";
-
-	filter:alpha(opacity=($ {
-		iefactor
-	}
-
-	));
-	-moz-opacity: 0;
-	-khtml-opacity: 0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
 	opacity: 0;
 	position: absolute;
 	top: 0;
@@ -6741,8 +6711,8 @@ ul.side-nav.fixed .collapsible-body li.active a {
 	z-index: 1;
 	width: 100%;
 	height: inherit;
-	overflow: hidden
-}
+	overflow: hidden;
+	
 
 .slider ul.slides li img {
 	height: 100%;
@@ -6758,21 +6728,10 @@ ul.side-nav.fixed .collapsible-body li.active a {
 	left: 15%;
 	width: 70%;
 
-	-ms-filter:"progid:DXImageTransform@mixin Microsoft@mixin Alpha(Opacity=$ {
-		iefactor
-	}
-
-	)";
-
-	filter:alpha(opacity=($ {
-		iefactor
-	}
-
-	));
-	-moz-opacity: 0;
-	-khtml-opacity: 0;
-	opacity: 0
-}
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	
 
 .slider ul.slides li .caption p {
 	color: #e0e0e0
@@ -7640,4 +7599,7 @@ body {
 
 main {
 	flex: 1 0 auto;
+}
+}
+}
 }
