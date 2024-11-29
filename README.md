@@ -16,8 +16,6 @@ Sebelum menggunakan aplikasi ini silakan atur konfigurasi database terlebih dahu
 
 Untuk tampilan terbaik, gunakan browser Google Chrome versi terbaru.
 
-Inspired by Nur Akhwam.
+Create By : Abdulloh habibie | <a href="mailto:abdullohhabibie@gmail.com?Subject=Hello" target="_top">Send Mail</a><br>
 
----
 
-Ini adalah source code dari postingan https://masrud.com/post/aplikasi-manajemen-surat-php-mysqli

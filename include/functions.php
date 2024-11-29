@@ -13,7 +13,7 @@ function conn($host, $username, $password, $database)
 }
 
 /**
- * Fungsi untuk mengkonversi format tanggal menjadi format Indonesia.
+ * Fungsi untuk mengkonversi format tanggal menjadi format Indonesi
  */
 function indoDate($date)
 {
